@@ -8,9 +8,3 @@ targets:
   dev:
     mode: development
     default: true
-    workspace:
-      host: ${var.workspace_host}
-
-variables:
-  workspace_host:
-    description: Databricks workspace host
