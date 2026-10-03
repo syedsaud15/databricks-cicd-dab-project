@@ -1,0 +1,16 @@
+bundle:
+  name: databricks-cicd-dab-project
+
+include:
+  - resources/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: ${var.workspace_host}
+
+variables:
+  workspace_host:
+    description: Databricks workspace host
