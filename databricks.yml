@@ -10,4 +10,7 @@ targets:
     default: true
 
   prod:
-    mode: production
+  mode: production
+  workspace:
+    root_path: /Workspace/Users/saudhere15@gmail.com/.bundle/${bundle.name}/${bundle.target}
+  

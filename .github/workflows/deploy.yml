@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - main
   workflow_dispatch:
 
 jobs:
@@ -17,20 +18,28 @@ jobs:
       - name: Install Databricks CLI
         uses: databricks/setup-cli@main
 
+      - name: Set deployment target
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "DATABRICKS_TARGET=prod" >> $GITHUB_ENV
+          else
+            echo "DATABRICKS_TARGET=dev" >> $GITHUB_ENV
+          fi
+
       - name: Validate Databricks Bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: databricks bundle validate -t dev
+        run: databricks bundle validate -t $DATABRICKS_TARGET
 
       - name: Deploy Databricks Bundle
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: databricks bundle deploy -t dev
+        run: databricks bundle deploy -t $DATABRICKS_TARGET
 
       - name: Run Customer ETL Job
         env:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
-        run: databricks bundle run customer_etl_job -t dev
+        run: databricks bundle run customer_etl_job -t $DATABRICKS_TARGET
