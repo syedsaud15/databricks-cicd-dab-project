@@ -6,7 +6,7 @@ resources:
       tasks:
         - task_key: customer_etl
           notebook_task:
-            notebook_path: ../customer_etl
+            notebook_path: ../customer_etl.py
           environment_key: default
 
       environments:
