@@ -1,0 +1,15 @@
+resources:
+  jobs:
+    customer_etl_job:
+      name: "[${bundle.target} saudhere15] customer-etl-job"
+
+      tasks:
+        - task_key: customer_etl
+          notebook_task:
+            notebook_path: ../customer_etl
+          environment_key: default
+
+      environments:
+        - environment_key: default
+          spec:
+            client: "1"
